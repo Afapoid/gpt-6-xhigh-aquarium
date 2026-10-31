@@ -1,0 +1,5 @@
+release/
+__pycache__/
+.DS_Store
+.openai/
+*.log

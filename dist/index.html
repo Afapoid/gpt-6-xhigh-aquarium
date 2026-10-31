@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0a1412"><meta name="description" content="Живой 3D-аквариум: дискусы, скалярии и стая неонов среди растений, коряг и света.">
+  <title>AQUA — живой аквариум</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 40 40'%3E%3Crect width='40' height='40' rx='12' fill='%2314221e'/%3E%3Cpath d='M8 22Q19 7 30 22Q19 33 8 22M30 22l5-6v12z' fill='%23c9e6ac'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="./interaction-kit.css"><link rel="stylesheet" href="./style.css">
+  <script type="importmap">{"imports":{"three":"./vendor/three.module.js"}}</script>
+</head>
+<body>
+  <main id="app">
+    <div id="viewport" tabindex="0" role="img" aria-label="Трёхмерный аквариум. Перетаскивание вращает камеру, колёсико меняет масштаб. С клавиатуры: стрелки и плюс или минус."></div>
+    <header class="topbar">
+      <div class="identity"><span class="brand">AQUA<span class="brand-dot">.</span></span><span class="divider"></span><span class="collection">Природа в стекле</span></div>
+      <div class="top-actions"><button id="settings-button" class="icon-button ui-press ui-press--on-dark ui-focus" aria-label="Настройки" title="Настройки"><i data-icon="sliders-horizontal"></i></button><button id="fullscreen" class="icon-button ui-press ui-press--on-dark ui-focus" aria-label="Полный экран" title="Полный экран"><i data-icon="maximize"></i></button></div>
+    </header>
+    <section class="scene-title" aria-label="Аквариум"><span class="small-label">АКВАСКЕЙП № 01</span><h1>Тихая заводь</h1><span class="scene-caption"><span id="fish-count">24</span> рыбы · 3 вида</span></section>
+    <div class="camera-strip" aria-label="Ракурс камеры"><button data-view="front" class="view-button ui-press ui-press--on-dark ui-focus" aria-pressed="true">Общий</button><button data-view="detail" class="view-button ui-press ui-press--on-dark ui-focus" aria-pressed="false">Ближе</button><button data-view="side" class="view-button ui-press ui-press--on-dark ui-focus" aria-pressed="false">Сбоку</button></div>
+    <footer class="bottom">
+      <div class="toolbar">
+        <div class="tool-group"><button id="pause" class="icon-button ui-press ui-press--on-dark ui-focus" aria-label="Пауза" title="Пауза"><i data-icon="pause"></i></button><span class="tool-separator"></span><button id="feed" class="feed-button ui-press ui-focus"><i data-icon="fish"></i><span>Покормить</span></button></div>
+        <div class="light-group" aria-label="Освещение"><button data-light="day" class="light-button ui-press ui-press--on-dark ui-focus" aria-pressed="true"><i data-icon="sun"></i><span>День</span></button><button data-light="sunset" class="light-button ui-press ui-press--on-dark ui-focus" aria-pressed="false"><i data-icon="sunset"></i><span>Закат</span></button><button data-light="night" class="light-button ui-press ui-press--on-dark ui-focus" aria-pressed="false"><i data-icon="moon"></i><span>Ночь</span></button></div>
+      </div>
+      <div class="underbar"><span class="gesture-hint">Перетаскивайте, чтобы осмотреть · Колёсико — ближе</span><span class="render-label">Живая 3D-сцена</span></div>
+    </footer>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <div id="loading" role="status"><div class="loading-inner"><span class="brand">AQUA.</span><span id="load-message">Создаём подводный мир…</span><progress aria-label="Загрузка аквариума"></progress><button id="retry" class="ui-press ui-focus" hidden>Попробовать снова</button></div></div>
+  </main>
+  <dialog id="settings" class="ui-pop-in"><div class="dialog-heading"><h2>Аквариум</h2><button id="close-settings" class="icon-button ui-press ui-press--on-dark ui-focus" aria-label="Закрыть настройки"><i data-icon="x"></i></button></div><div class="setting-row"><label for="quality">Качество</label><select id="quality" class="ui-focus"><option value="high">Высокое</option><option value="balanced">Сбалансированное</option><option value="low">Экономное</option></select></div><div class="setting-row"><label for="bubbles">Пузырьки</label><input type="checkbox" id="bubbles" checked></div><div class="setting-row"><label for="auto-orbit">Вращение камеры</label><input type="checkbox" id="auto-orbit"></div><p class="technical-note">Отражения воды, преломление и каустика рассчитаны в WebGL. Аппаратная трассировка RTX не используется.</p><div class="species-list"><h3>Обитатели</h3><div><span>Красный дискус</span><span>3</span></div><div><span>Скалярия</span><span>3</span></div><div><span>Голубой неон</span><span>18</span></div></div></dialog>
+  <script src="./interaction-kit.js"></script>
+  <script>window.BetterUI?.init(document);document.getElementById('retry').onclick=()=>location.reload();window.aquaFail=(error)=>{document.getElementById('loading').hidden=false;document.getElementById('load-message').textContent='Не удалось запустить 3D. Проверьте аппаратное ускорение браузера.';document.querySelector('progress').hidden=true;document.getElementById('retry').hidden=false;console.error(error)};</script>
+  <script type="module">import('./app.js').catch(window.aquaFail);</script>
+</body>
+</html>
